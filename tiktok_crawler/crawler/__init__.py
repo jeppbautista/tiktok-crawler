@@ -1,10 +1,13 @@
 import logging
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
+from tiktok_crawler import exception
 from tiktok_crawler.config import Config
 from tiktok_crawler.driver import Driver
-from tiktok_crawler.item import Author, Caption, Media, Tag
+from tiktok_crawler.item import Author, Caption, Media, Metrics, Music, Tag, Tiktok
 from tiktok_crawler import xpath
 
 import time
@@ -13,20 +16,34 @@ class Crawler:
     def __init__(self) -> None:
         self.driver = Driver().get_driver()
     
-    def get_item_containers(self, root):
+    def get_tiktok_videos(self, root):
         for element in root.find_elements(By.XPATH, xpath.ContainerItem.CONTAINERS):
             
             logging.info("Scrolling to Element")
             self.driver.execute_script("arguments[0].scrollIntoView()", element)
-            time.sleep(5)
+            time.sleep(2)
             
             try:
                 logging.info("Extracting")
-                # author = self._get_author(element)
-                # caption = self._get_caption(element)
+                author = self._get_author(element)
+                caption = self._get_caption(element)
                 media = self._get_media(element)
-                print(media)
-            except TimeoutException as e:
+                metrics = self._get_metrics(element)
+                music = self._get_music(element)
+                
+                tiktok = Tiktok(
+                    id = element.id,
+                    author=author,
+                    caption=caption,
+                    media=media,
+                    metrics=metrics,
+                    music=music,
+                    element=element
+                )
+                
+                print(tiktok)
+                
+            except exception.MediaNotFoundException as e:
                 logging.warning(e)
                 
             logging.info("DONE Extracting element")
@@ -63,14 +80,17 @@ class Crawler:
     
     def _get_media(self, item_container):
         media_container = item_container.find_element(By.XPATH, xpath.Media.CONTAINER)
-        from selenium.webdriver.support.wait import WebDriverWait
-        from selenium.webdriver.support import expected_conditions as EC
         try:
             link = WebDriverWait(media_container, 20).until(
                 EC.presence_of_element_located((By.XPATH, xpath.Media.LINK))
             ).get_attribute("src")
         except TimeoutException:
-            raise TimeoutError("Unable to find Media")
+            try:
+                link = WebDriverWait(media_container, 20).until(
+                    EC.presence_of_element_located((By.XPATH, xpath.Media.LINK_ALT))
+                ).get_attribute("src")
+            except TimeoutException:    
+                raise exception.MediaNotFoundException("Unable to find Media")
         
         media = Media(
             link=link,
@@ -78,8 +98,37 @@ class Crawler:
         )
         
         return media
-
     
+    def _get_metrics(self, item_container):
+        metrics_container = item_container.find_element(By.XPATH, xpath.Metrics.CONTAINER)
+        
+        likes = metrics_container.find_element(By.XPATH, xpath.Metrics.LIKES).text
+        comments = metrics_container.find_element(By.XPATH, xpath.Metrics.COMMENTS).text
+        shares = metrics_container.find_element(By.XPATH, xpath.Metrics.SHARES).text
+        
+        metrics = Metrics(
+            likes=likes,
+            comments=comments,
+            shares=shares,
+            element=metrics_container
+        )
+        
+        return metrics
+    
+    def _get_music(self, item_container):
+        music_container = item_container.find_element(By.XPATH, xpath.Music.CONTAINER)
+        
+        title = music_container.find_element(By.XPATH, xpath.Music.TITLE).text
+        link = music_container.find_element(By.XPATH, xpath.Music.LINK).get_attribute("href")
+        
+        music = Music(
+            title=title,
+            link=link,
+            element=music_container
+        )
+        
+        return music
+
     def _get_tags(self, video_description):
         _tags = []
         for tag in video_description.find_elements(By.XPATH, xpath.Caption.TAGS):
