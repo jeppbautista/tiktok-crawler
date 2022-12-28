@@ -12,7 +12,7 @@ driver.implicitly_wait(20)
 root = driver.find_element(By.XPATH, """//*[@id="app"]""")
 
 crawl = Crawler()
-item_containers = crawl.get_tiktok_videos(root)
+item_containers = crawl.get_foryou_tiktok_videos(root)
 keyword = input("enter a character or press enter to continue")
 
 # ff = root.find_element(By.XPATH, Config.CRAWL_XPATH_CONTENTDIV)

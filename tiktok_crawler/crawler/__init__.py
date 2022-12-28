@@ -1,6 +1,7 @@
 import logging
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -16,37 +17,40 @@ class Crawler:
     def __init__(self) -> None:
         self.driver = Driver().get_driver()
     
-    def get_tiktok_videos(self, root):
+    def get_foryou_tiktok_videos(self, root):
         for element in root.find_elements(By.XPATH, xpath.ContainerItem.CONTAINERS):
+            self.get_tiktok(element)
+        
+    def get_tiktok(self, element : WebElement) -> Tiktok:
+        logging.info("Scrolling to Element")
+        self.driver.execute_script("arguments[0].scrollIntoView()", element)
+        time.sleep(2)
             
-            logging.info("Scrolling to Element")
-            self.driver.execute_script("arguments[0].scrollIntoView()", element)
-            time.sleep(2)
-            
-            try:
-                logging.info("Extracting")
-                author = self._get_author(element)
-                caption = self._get_caption(element)
-                media = self._get_media(element)
-                metrics = self._get_metrics(element)
-                music = self._get_music(element)
+        try:
+            logging.info("Extracting")
+            author = self._get_author(element)
+            caption = self._get_caption(element)
+            media = self._get_media(element)
+            metrics = self._get_metrics(element)
+            music = self._get_music(element)
                 
-                tiktok = Tiktok(
-                    id = element.id,
-                    author=author,
-                    caption=caption,
-                    media=media,
-                    metrics=metrics,
-                    music=music,
-                    element=element
-                )
+            tiktok = Tiktok(
+                id = element.id,
+                author=author,
+                caption=caption,
+                media=media,
+                metrics=metrics,
+                music=music,
+                element=element
+            )
                 
-                print(tiktok)
+            return tiktok
                 
-            except exception.MediaNotFoundException as e:
-                logging.warning(e)
+        except exception.MediaNotFoundException as e:
+            logging.warning(e)
                 
-            logging.info("DONE Extracting element")
+        logging.info("DONE Extracting element")
+        return None
         
     def _get_author(self, item_container):
         uniqueid = item_container.find_element(By.XPATH, xpath.Author.UNIQUEID).text
