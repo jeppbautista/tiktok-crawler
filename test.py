@@ -8,6 +8,7 @@ from tiktok_crawler.driver import Driver
 
 driver = Driver().get_driver()
 driver.get(Config.CRAWL_ROOT_URL)
+driver.implicitly_wait(20)
 root = driver.find_element(By.XPATH, """//*[@id="app"]""")
 
 crawl = Crawler()
