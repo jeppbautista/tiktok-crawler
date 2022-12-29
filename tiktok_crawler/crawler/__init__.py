@@ -22,46 +22,29 @@ class Crawler:
         options = driver_options if isinstance(driver_options, list) else []
         self.driver = Driver(*options).get_driver()
         self.limit = limit
-        self.root = self.get_root(Config.CRAWL_ROOT_URL)
-        
-    def get_root(self, url):
-        self.driver.get(url)
-        root = self.driver.find_element(By.XPATH, xpath.Root.ROOT)
-        
-        return root
-    
-    def load_tiktok_videos(self):
-        def _is_limit_reached() -> bool:
-            element_count = len([element for element in self.root.find_elements(By.XPATH, xpath.ContainerItem.CONTAINERS)])
-            logging.info(f"Element count: {element_count}")
-            return self.limit <= element_count
-        
-        while not _is_limit_reached():
-            logging.info("Scrolling...")
-            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(0.5)
+        self.root = self.__get_root(Config.CRAWL_ROOT_URL)
     
     def get_foryou_tiktok_videos(self):
-        self.load_tiktok_videos()
+        self.__load_tiktok_videos()
         tiktoks = []
                 
         for element in self.root.find_elements(By.XPATH, xpath.ContainerItem.CONTAINERS)[:self.limit]:
             logging.info("Scrolling to Element...")
             self.driver.execute_script("arguments[0].scrollIntoView()", element)
             time.sleep(1)
-            tiktok = self.get_tiktok(element)
+            tiktok = self.__get_tiktok(element)
             tiktoks.append(tiktok)
             
         print([f"{i}\n" for i in tiktoks])
         
-    def get_tiktok(self, element : WebElement) -> Tiktok:
+    def __get_tiktok(self, element : WebElement) -> Tiktok:
         try:
             logging.info("Extracting")
-            author = self._get_author(element)
-            caption = self._get_caption(element)
-            media = self._get_media(element)
-            metrics = self._get_metrics(element)
-            music = self._get_music(element)
+            author = self.__get_author(element)
+            caption = self.__get_caption(element)
+            media = self.__get_media(element)
+            metrics = self.__get_metrics(element)
+            music = self.__get_music(element)
                 
             tiktok = Tiktok(
                 id = element.id,
@@ -88,8 +71,25 @@ class Crawler:
                 
         logging.info("DONE Extracting element")
         return tiktok
+    
+    def __get_root(self, url):
+        self.driver.get(url)
+        root = self.driver.find_element(By.XPATH, xpath.Root.ROOT)
         
-    def _get_author(self, item_container):
+        return root
+    
+    def __load_tiktok_videos(self):
+        def _is_limit_reached() -> bool:
+            element_count = len([element for element in self.root.find_elements(By.XPATH, xpath.ContainerItem.CONTAINERS)])
+            logging.info(f"Element count: {element_count}")
+            return self.limit <= element_count
+        
+        while not _is_limit_reached():
+            logging.info("Scrolling...")
+            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(0.5)
+        
+    def __get_author(self, item_container):
         uniqueid = item_container.find_element(By.XPATH, xpath.Author.UNIQUEID).text
         avatar = item_container.find_element(By.XPATH, xpath.Author.AVATAR).get_attribute("src")
         link = item_container.find_element(By.XPATH, xpath.Author.LINK).get_attribute("href")
@@ -105,11 +105,11 @@ class Crawler:
         
         return author
     
-    def _get_caption(self, item_container):
+    def __get_caption(self, item_container):
         video_description = item_container.find_element(By.XPATH, xpath.Caption.CONTAINER)
         video_text = video_description.find_element(By.XPATH, xpath.Caption.TEXT).text
         
-        tags = self._get_tags(video_description)
+        tags = self.__get_tags(video_description)
             
         caption = Caption(
             text=video_text,
@@ -119,7 +119,7 @@ class Crawler:
             
         return caption
     
-    def _get_media(self, item_container):
+    def __get_media(self, item_container):
         def _is_playing():
             pass
         
@@ -143,7 +143,7 @@ class Crawler:
         
         return media
     
-    def _get_metrics(self, item_container):
+    def __get_metrics(self, item_container):
         metrics_container = item_container.find_element(By.XPATH, xpath.Metrics.CONTAINER)
         
         likes = metrics_container.find_element(By.XPATH, xpath.Metrics.LIKES).text
@@ -159,7 +159,7 @@ class Crawler:
         
         return metrics
     
-    def _get_music(self, item_container):
+    def __get_music(self, item_container):
         music_container = item_container.find_element(By.XPATH, xpath.Music.CONTAINER)
         
         title = music_container.find_element(By.XPATH, xpath.Music.TITLE).text
@@ -173,7 +173,7 @@ class Crawler:
         
         return music
 
-    def _get_tags(self, video_description):
+    def __get_tags(self, video_description):
         _tags = []
         for tag in video_description.find_elements(By.XPATH, xpath.Caption.TAGS):
             link = tag.get_attribute("href")
