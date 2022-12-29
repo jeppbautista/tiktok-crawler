@@ -1,4 +1,3 @@
-import logging
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
@@ -8,9 +7,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from tiktok_crawler import exception
 from tiktok_crawler.config import Config
 from tiktok_crawler.driver import Driver
-from tiktok_crawler.item import Author, Caption, Media, Metrics, Music, Tag, Tiktok
+from tiktok_crawler.entities import Author, Caption, Media, Metrics, Music, Tag, Tiktok
 from tiktok_crawler import xpath
 
+import json
+import logging
 import time
 
 class Crawler:
@@ -35,7 +36,8 @@ class Crawler:
             tiktok = self.__get_tiktok(element)
             tiktoks.append(tiktok)
             
-        print([f"{i}\n" for i in tiktoks])
+        return tiktoks
+        
         
     def __get_tiktok(self, element : WebElement) -> Tiktok:
         try:
