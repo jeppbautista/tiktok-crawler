@@ -14,8 +14,10 @@ class _Singleton(type):
         return cls._instances[cls]
     
 class Driver(metaclass=_Singleton):
-    def __init__(self) -> None:
+    def __init__(self, *args) -> None:
         options = Options()
+        for arg in args:
+            options.add_argument(arg)
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
     def get_driver(self):
