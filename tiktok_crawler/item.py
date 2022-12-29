@@ -106,10 +106,11 @@ class Tiktok:
     music: Music
     media: Media
     metrics: Metrics
-    element: WebElement   
+    element: WebElement
+    status: str = None
 
     def __eq__(self, obj) -> bool:
         return self.id == obj.id
     
     def __repr__(self) -> str:
-        return f"Tiktok(id={self.id}, {self.author}, {self.caption}, {self.music}, {self.media}, {self.metrics})"
+        return f"Tiktok(id={self.id}, {self.status}, {self.author}, {self.caption}, {self.music}, {self.media}, {self.metrics})"

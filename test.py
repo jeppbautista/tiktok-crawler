@@ -6,15 +6,13 @@ from tiktok_crawler.config import Config
 from tiktok_crawler.crawler import Crawler
 from tiktok_crawler.driver import Driver
 
-driver = Driver().get_driver()
-driver.get(Config.CRAWL_ROOT_URL)
-driver.implicitly_wait(20)
-root = driver.find_element(By.XPATH, """//*[@id="app"]""")
+# driver = Driver().get_driver()
+# driver.get(Config.CRAWL_ROOT_URL)
+# driver.implicitly_wait(20)
+# root = driver.find_element(By.XPATH, """//*[@id="app"]""")
 
 crawl = Crawler()
-item_containers = crawl.get_foryou_tiktok_videos(root)
-keyword = input("enter a character or press enter to continue")
-
+item_containers = crawl.get_foryou_tiktok_videos()
 # ff = root.find_element(By.XPATH, Config.CRAWL_XPATH_CONTENTDIV)
 # print(ff.find_elements(By.XPATH, "//div[1]//div"))
 

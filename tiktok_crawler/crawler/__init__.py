@@ -14,18 +14,47 @@ from tiktok_crawler import xpath
 import time
 
 class Crawler:
-    def __init__(self) -> None:
-        self.driver = Driver().get_driver()
+    def __init__(
+        self, 
+        limit:int = 15,
+        driver_options:list = None
+    ) -> None:
+        options = driver_options if isinstance(driver_options, list) else []
+        self.driver = Driver(*options).get_driver()
+        self.limit = limit
+        self.root = self.get_root(Config.CRAWL_ROOT_URL)
+        
+    def get_root(self, url):
+        self.driver.get(url)
+        root = self.driver.find_element(By.XPATH, xpath.Root.ROOT)
+        
+        return root
     
-    def get_foryou_tiktok_videos(self, root):
-        for element in root.find_elements(By.XPATH, xpath.ContainerItem.CONTAINERS):
-            self.get_tiktok(element)
+    def load_tiktok_videos(self):
+        def _is_limit_reached() -> bool:
+            element_count = len([element for element in self.root.find_elements(By.XPATH, xpath.ContainerItem.CONTAINERS)])
+            logging.info(f"Element count: {element_count}")
+            return self.limit <= element_count
+        
+        while not _is_limit_reached():
+            logging.info("Scrolling...")
+            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(0.5)
+    
+    def get_foryou_tiktok_videos(self):
+        self.load_tiktok_videos()
+        tiktoks = []
+                
+        for element in self.root.find_elements(By.XPATH, xpath.ContainerItem.CONTAINERS)[:self.limit]:
+            logging.info("Scrolling to Element...")
+            self.driver.execute_script("arguments[0].scrollIntoView()", element)
+            time.sleep(1)
+            tiktok = self.get_tiktok(element)
+            tiktoks.append(tiktok)
+            
+        print([f"{i}\n" for i in tiktoks])
         
     def get_tiktok(self, element : WebElement) -> Tiktok:
-        logging.info("Scrolling to Element")
-        self.driver.execute_script("arguments[0].scrollIntoView()", element)
-        time.sleep(2)
-            
         try:
             logging.info("Extracting")
             author = self._get_author(element)
@@ -44,13 +73,21 @@ class Crawler:
                 element=element
             )
                 
-            return tiktok
-                
         except exception.MediaNotFoundException as e:
             logging.warning(e)
+            tiktok = Tiktok(
+                id = element.id,
+                author=author,
+                caption=caption,
+                media=media,
+                metrics=None,
+                music=None,
+                element=element,
+                status="MediaNotFoundException"
+            )
                 
         logging.info("DONE Extracting element")
-        return None
+        return tiktok
         
     def _get_author(self, item_container):
         uniqueid = item_container.find_element(By.XPATH, xpath.Author.UNIQUEID).text
@@ -83,17 +120,20 @@ class Crawler:
         return caption
     
     def _get_media(self, item_container):
+        def _is_playing():
+            pass
+        
         media_container = item_container.find_element(By.XPATH, xpath.Media.CONTAINER)
         try:
-            link = WebDriverWait(media_container, 20).until(
-                EC.presence_of_element_located((By.XPATH, xpath.Media.LINK))
+            link = WebDriverWait(media_container, 10).until(
+                EC.presence_of_element_located((By.XPATH, f"{xpath.Media.LINK}|{xpath.Media.LINK_ALT}"))
             ).get_attribute("src")
         except TimeoutException:
             try:
-                link = WebDriverWait(media_container, 20).until(
-                    EC.presence_of_element_located((By.XPATH, xpath.Media.LINK_ALT))
+                link = WebDriverWait(media_container, 10).until(
+                    EC.presence_of_element_located((By.XPATH, f"{xpath.Media.LINK}|{xpath.Media.LINK_ALT}"))
                 ).get_attribute("src")
-            except TimeoutException:    
+            except TimeoutException:  
                 raise exception.MediaNotFoundException("Unable to find Media")
         
         media = Media(
