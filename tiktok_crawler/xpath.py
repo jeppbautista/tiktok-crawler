@@ -17,8 +17,8 @@ class Caption(ContainerItem):
     
 class Media(ContainerItem):
     CONTAINER = ".//div[1]/div[2]/div[1]"
-    LINK = ".//div[1]/div[1]/div[1]/div[1]/video[1]/source[1]"
-    LINK_ALT = ".//div[1]/div[1]/div[1]/div[1]/video[1]"
+    LINK = ".//div/div[1]/div[1]/div[1]/video[1]/source[1]"
+    LINK_ALT = ".//div/div[1]/div[1]/div[1]/video[1]"
     
     
 class Metrics(ContainerItem):
