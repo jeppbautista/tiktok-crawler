@@ -10,11 +10,16 @@ from tiktok_crawler.driver import Driver
 from tiktok_crawler.entities import Author, Caption, Media, Metrics, Music, Tag, Tiktok
 from tiktok_crawler import xpath
 
-import json
 import logging
 import time
 
 class Crawler:
+    """Handles all the web crawling in Selenium. Acts as the controller of the whole project.
+    
+    Args:
+        limit (int): Defines how many videos to download.
+        driver_options (list): Implements the chromium command line switches. See here: https://peter.sh/experiments/chromium-command-line-switches/
+    """
     def __init__(
         self, 
         limit:int = 15,
@@ -25,7 +30,12 @@ class Crawler:
         self.limit = limit
         self.root = self.__get_root(Config.CRAWL_ROOT_URL)
     
-    def get_foryou_tiktok_videos(self):
+    def get_foryou_tiktok_videos(self) -> list[Tiktok]:
+        """Downloads videos and metadata from the **for you** page of Tiktok.
+
+        Returns:
+            list[Tiktok]: list of `tiktok_crawler.entities.Tiktok`
+        """
         self.__load_tiktok_videos()
         tiktoks = []
                 
@@ -40,6 +50,17 @@ class Crawler:
         
         
     def __get_tiktok(self, element : WebElement) -> Tiktok:
+        """Extracts metadata from the tiktok videos and creates `tiktok_crawler.entities` instance for all of them.
+
+        Args:
+            element (WebElement): Accepts a Selenium web element which is the extracted container of a Tiktok video.
+
+        Returns:
+            Tiktok: Returns a `tiktok_crawler.entities.Tiktok` instance.
+            
+        Raises:
+            MediaNotFoundException: if the crawler was unable to download the Tiktok video.
+        """
         try:
             logging.info("Extracting")
             author = self.__get_author(element)
@@ -74,7 +95,15 @@ class Crawler:
         logging.info("DONE Extracting element")
         return tiktok
     
-    def __get_root(self, url):
+    def __get_root(self, url:str) -> WebElement:
+        """Extracts the root element of the page. This is done to remove unecessary HTML elements such as the *head*, *script* and *style*.
+
+        Args:
+            url (str): _description_
+
+        Returns:
+            WebElement: _description_
+        """
         self.driver.get(url)
         root = self.driver.find_element(By.XPATH, xpath.Root.ROOT)
         
