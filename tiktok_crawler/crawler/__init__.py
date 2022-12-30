@@ -32,7 +32,7 @@ class Crawler:
         for element in self.root.find_elements(By.XPATH, xpath.ContainerItem.CONTAINERS)[:self.limit]:
             logging.info("Scrolling to Element...")
             self.driver.execute_script("arguments[0].scrollIntoView()", element)
-            time.sleep(1)
+            time.sleep(Config.CRAWL_SCROLL_PAUSE_TIME)
             tiktok = self.__get_tiktok(element)
             tiktoks.append(tiktok)
             
@@ -89,7 +89,7 @@ class Crawler:
         while not _is_limit_reached():
             logging.info("Scrolling...")
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(0.5)
+            time.sleep(Config.CRAWL_SCROLL_PAUSE_TIME)
         
     def __get_author(self, item_container):
         uniqueid = item_container.find_element(By.XPATH, xpath.Author.UNIQUEID).text
