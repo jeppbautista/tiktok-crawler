@@ -1,0 +1,14 @@
+site_name: tiktok-crawler - A custom crawler for downloading Tiktok videos.
+repo_url: https://github.com/jeppbautista/tiktok-crawler
+
+theme:
+  name: readthedocs
+
+plugins:
+  - mkdocstrings
+  - search
+
+nav:
+  - Tiktok Crawler: 'index.md'
+  - Crawler: 'crawler.md'
+  - Entities: 'entities.md'
