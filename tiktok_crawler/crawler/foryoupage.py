@@ -9,7 +9,7 @@ from tiktok_crawler import exception
 from tiktok_crawler.config import Config
 from tiktok_crawler.driver import Driver
 from tiktok_crawler.entities import Author, Caption, Media, Metrics, Music, Tag, Tiktok
-from tiktok_crawler import xpath
+from tiktok_crawler.xpath import foryoupage
 
 import logging
 import time
@@ -41,7 +41,7 @@ class CrawlerForYouPage(Crawler):
         self._load_tiktok_videos()
         tiktoks = []
                 
-        for element in self.root.find_elements(By.XPATH, xpath.ContainerItem.CONTAINERS)[:self.limit]:
+        for element in self.root.find_elements(By.XPATH, foryoupage.ContainerItem.CONTAINERS)[:self.limit]:
             logging.info("Scrolling to Element...")
             self.driver.execute_script("arguments[0].scrollIntoView()", element)
             time.sleep(Config.CRAWL_SCROLL_PAUSE_TIME)
@@ -60,7 +60,7 @@ class CrawlerForYouPage(Crawler):
             WebElement:  Returns a Selenium web element which is the extracted root element of the page.
         """
         self.driver.get(url)
-        root = self.driver.find_element(By.XPATH, xpath.Root.ROOT)
+        root = self.driver.find_element(By.XPATH, foryoupage.Root.ROOT)
         
         return root
     
@@ -73,7 +73,7 @@ class CrawlerForYouPage(Crawler):
             Returns:
                 bool: `self.limit` <= the number of elements in `xpath.ContainerItem.CONTAINERS`
             """
-            element_count = len([element for element in self.root.find_elements(By.XPATH, xpath.ContainerItem.CONTAINERS)])
+            element_count = len([element for element in self.root.find_elements(By.XPATH, foryoupage.ContainerItem.CONTAINERS)])
             logging.info(f"Element count: {element_count}")
             return self.limit <= element_count
         
@@ -140,10 +140,10 @@ class CrawlerForYouPage(Crawler):
         Returns:
             Author: Returns a `tiktok_crawler.entities.Author` instance.
         """
-        uniqueid = item_container.find_element(By.XPATH, xpath.Author.UNIQUEID).text
-        avatar = item_container.find_element(By.XPATH, xpath.Author.AVATAR).get_attribute("src")
-        link = item_container.find_element(By.XPATH, xpath.Author.LINK).get_attribute("href")
-        nickname = item_container.find_element(By.XPATH, xpath.Author.NICKNAME).text
+        uniqueid = item_container.find_element(By.XPATH, foryoupage.Author.UNIQUEID).text
+        avatar = item_container.find_element(By.XPATH, foryoupage.Author.AVATAR).get_attribute("src")
+        link = item_container.find_element(By.XPATH, foryoupage.Author.LINK).get_attribute("href")
+        nickname = item_container.find_element(By.XPATH, foryoupage.Author.NICKNAME).text
         
         author = Author(
             uniqueid=uniqueid,
@@ -164,8 +164,8 @@ class CrawlerForYouPage(Crawler):
         Returns:
             Caption: Returns a `tiktok_crawler.entities.Caption` instance.
         """
-        video_description = item_container.find_element(By.XPATH, xpath.Caption.CONTAINER)
-        video_text = video_description.find_element(By.XPATH, xpath.Caption.TEXT).text
+        video_description = item_container.find_element(By.XPATH, foryoupage.Caption.CONTAINER)
+        video_text = video_description.find_element(By.XPATH, foryoupage.Caption.TEXT).text
         
         tags = self._get_tags(video_description)
             
@@ -189,15 +189,15 @@ class CrawlerForYouPage(Crawler):
         Raises:
             MediaNotFoundException: if the crawler was unable to download the Tiktok video.
         """
-        media_container = item_container.find_element(By.XPATH, xpath.Media.CONTAINER)
+        media_container = item_container.find_element(By.XPATH, foryoupage.Media.CONTAINER)
         try:
             link = WebDriverWait(media_container, 10).until(
-                EC.presence_of_element_located((By.XPATH, f"{xpath.Media.LINK}|{xpath.Media.LINK_ALT}"))
+                EC.presence_of_element_located((By.XPATH, f"{foryoupage.Media.LINK}|{foryoupage.Media.LINK_ALT}"))
             ).get_attribute("src")
         except TimeoutException:
             try:
                 link = WebDriverWait(media_container, 10).until(
-                    EC.presence_of_element_located((By.XPATH, f"{xpath.Media.LINK}|{xpath.Media.LINK_ALT}"))
+                    EC.presence_of_element_located((By.XPATH, f"{foryoupage.Media.LINK}|{foryoupage.Media.LINK_ALT}"))
                 ).get_attribute("src")
             except TimeoutException:  
                 raise exception.MediaNotFoundException("Unable to find Media")
@@ -218,11 +218,11 @@ class CrawlerForYouPage(Crawler):
         Returns:
             Metrics: Returns a `tiktok_crawler.entities.Metrics` instance.
         """
-        metrics_container = item_container.find_element(By.XPATH, xpath.Metrics.CONTAINER)
+        metrics_container = item_container.find_element(By.XPATH, foryoupage.Metrics.CONTAINER)
         
-        likes = metrics_container.find_element(By.XPATH, xpath.Metrics.LIKES).text
-        comments = metrics_container.find_element(By.XPATH, xpath.Metrics.COMMENTS).text
-        shares = metrics_container.find_element(By.XPATH, xpath.Metrics.SHARES).text
+        likes = metrics_container.find_element(By.XPATH, foryoupage.Metrics.LIKES).text
+        comments = metrics_container.find_element(By.XPATH, foryoupage.Metrics.COMMENTS).text
+        shares = metrics_container.find_element(By.XPATH, foryoupage.Metrics.SHARES).text
         
         metrics = Metrics(
             likes=likes,
@@ -242,10 +242,10 @@ class CrawlerForYouPage(Crawler):
         Returns:
             Music: Returns a `tiktok_crawler.entities.Music` instance.
         """
-        music_container = item_container.find_element(By.XPATH, xpath.Music.CONTAINER)
+        music_container = item_container.find_element(By.XPATH, foryoupage.Music.CONTAINER)
         
-        title = music_container.find_element(By.XPATH, xpath.Music.TITLE).text
-        link = music_container.find_element(By.XPATH, xpath.Music.LINK).get_attribute("href")
+        title = music_container.find_element(By.XPATH, foryoupage.Music.TITLE).text
+        link = music_container.find_element(By.XPATH, foryoupage.Music.LINK).get_attribute("href")
         
         music = Music(
             title=title,
@@ -266,9 +266,9 @@ class CrawlerForYouPage(Crawler):
         """
     
         _tags = []
-        for tag in video_description.find_elements(By.XPATH, xpath.Caption.TAGS):
+        for tag in video_description.find_elements(By.XPATH, foryoupage.Caption.TAGS):
             link = tag.get_attribute("href")
-            text = tag.find_element(By.XPATH, xpath.Tag.TEXT).text
+            text = tag.find_element(By.XPATH, foryoupage.Tag.TEXT).text
             
             _tags.append(
                 Tag(
