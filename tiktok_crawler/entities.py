@@ -241,8 +241,9 @@ class Tiktok:
             with open(file_path, "wb") as file:
                 file.write(response.content)
         
-        _save_metadata(path)
-        _save_video(path)
+        if self.media.link:
+            _save_metadata(path)
+            _save_video(path)
     
     def to_dict(self):
         return dict(
