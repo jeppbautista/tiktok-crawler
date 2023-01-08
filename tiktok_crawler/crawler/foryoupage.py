@@ -81,53 +81,6 @@ class CrawlerForYouPage(Crawler):
             logging.info("Scrolling...")
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(Config.CRAWL_SCROLL_PAUSE_TIME)
-       
-        
-    def _get_tiktok(self, element : WebElement) -> Tiktok:
-        """Extracts metadata from the tiktok videos and creates `tiktok_crawler.entities` instance for all of them.
-
-        Args:
-            element (WebElement): Accepts a Selenium web element which is the extracted container of a Tiktok video.
-
-        Returns:
-            Tiktok: Returns a `tiktok_crawler.entities.Tiktok` instance.
-            
-        Raises:
-            MediaNotFoundException: if the crawler was unable to download the Tiktok video.
-        """
-        try:
-            logging.info("Extracting")
-            author = self._get_author(element)
-            caption = self._get_caption(element)
-            media = self._get_media(element)
-            metrics = self._get_metrics(element)
-            music = self._get_music(element)
-                
-            tiktok = Tiktok(
-                id = element.id,
-                author=author,
-                caption=caption,
-                media=media,
-                metrics=metrics,
-                music=music,
-                element=element
-            )
-                
-        except exception.MediaNotFoundException as e:
-            logging.warning(e)
-            tiktok = Tiktok(
-                id = element.id,
-                author=author,
-                caption=caption,
-                media=media,
-                metrics=None,
-                music=None,
-                element=element,
-                status="MediaNotFoundException"
-            )
-                
-        logging.info("DONE Extracting element")
-        return tiktok
 
     ### Get entities
       

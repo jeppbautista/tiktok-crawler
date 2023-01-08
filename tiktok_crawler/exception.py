@@ -1,2 +1,9 @@
+
+class CaptchaTimeoutException(Exception):
+    ...
+
 class MediaNotFoundException(Exception):
-    pass
+    ...
+
+class NoElementsFound(Exception):
+    ...

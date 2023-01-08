@@ -56,7 +56,6 @@ class Author(TiktokEntity):
             nickname=self.nickname,
             link=self.link,
             avatar=self.avatar,
-            element=self.element.get_attribute("innerHTML")
         )
 
 @dataclass
@@ -87,8 +86,7 @@ class Tag(TiktokEntity):
     def to_dict(self):
         return dict(
             link=self.link,
-            text=self.text,
-            element=self.element.get_attribute("innerHTML")
+            text=self.text
         )
     
 @dataclass
@@ -114,7 +112,7 @@ class Caption(TiktokEntity):
         return dict(
             tags=[tag.to_dict() for tag in self.tags],
             text=self.text,
-            element=self.element.get_attribute("innerHTML")
+            
         )
 
 @dataclass
@@ -145,7 +143,7 @@ class Music(TiktokEntity):
         return dict(
             title=self.title,
             link=self.link,
-            element=self.element.get_attribute("innerHTML")
+            
         )
 
 @dataclass
@@ -168,7 +166,7 @@ class Media(TiktokEntity):
     def to_dict(self):
         return dict(
             link=self.link,
-            element=self.element.get_attribute("innerHTML")
+            
         )
     
 @dataclass
@@ -202,7 +200,7 @@ class Metrics(TiktokEntity):
             comments=self.comments,
             shares=self.shares,
             as_of=self.as_of,
-            element=self.element.get_attribute("innerHTML")
+            
         )
 
 @dataclass
@@ -253,7 +251,6 @@ class Tiktok:
             Music=self.music.to_dict(),
             Media=self.media.to_dict(),
             Metrics=self.metrics.to_dict(),
-            Element=self.element.get_attribute("innerHTML"),
             Status=self.status
         )
 
