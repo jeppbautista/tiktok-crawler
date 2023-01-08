@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 import datetime
 import json
+import logging
 import os
 import requests
 
@@ -240,8 +241,11 @@ class Tiktok:
                 file.write(response.content)
         
         if self.media.link:
+            logging.info("Saving Tiktok...")
             _save_metadata(path)
             _save_video(path)
+        else:
+            logging.error("Media is NULL")
     
     def to_dict(self):
         return dict(
