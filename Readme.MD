@@ -2,7 +2,7 @@
 A custom Python crawler written in Selenium for downloading Tiktok videos as mp4 files along with their metadata in a json file (author, tags, captions, etc.).
 Some key features of this project are:
 1. Download videos from the **for you** page
-2. Download videos based on search parameters [WIP]
+2. Download videos based on search parameters
 
 <div class="warning" style='padding:0.1em; background-color:#E9D8FD; color:#69337A'>
 <span>
@@ -14,11 +14,19 @@ This does not implement VPN or proxies for geolocation changes, meaning the Tikt
 </div>
 
 ## How To Use:
-Open the folder: `/examples` it contains Python codes showing how to use this library. Key functions:
-1. `tiktok_crawler.crawl.get_foryou_tiktok_videos()`
-Crawls videos in the **for you** page.
-1. `tiktok_crawler.crawl.get_search_tiktok_videos(search)` [WIP]
-Crawls videos based on search parameter.
+View the following files to see how to use the crawlers:
+### 1. `run_search_tiktok_videos.py`
+Uses the class `crawler.search.SearchCrawler` to crawl the results of the search page from the given `search` parameter.
+
+<b>IMPORTANT ❗</b></p>
+<p style='margin-left:1em;'>
+As of writing, the class is unable to bypass Tiktok's captcha for the search results page. As a work around, the <b>user</b> needs to solve the captcha manually for the crawling to proceed. The program will timeout if the captcha is not solved after 60 seconds.
+</p>
+
+![image](image/captcha.png)
+
+### 2. `run_get_foryou_videos.py`
+Uses the class `crawler.foryoupage.CrawlerForYouPage` to crawl Tiktok videos in the **for you** page.
 
 ## Output
 The output after running the functions above are json files containing the metadata and mp4 files of the tiktok videos. Each json file and mp4 file is a single tiktok video. They are identified by an internal id, meaning one tiktok video may have an id like `f019457f-e39a-4601-9247-95e067864425`. The crawler functions will generate a f019457f-e39a-4601-9247-95e067864425.json and f019457f-e39a-4601-9247-95e067864425.mp4 file.
