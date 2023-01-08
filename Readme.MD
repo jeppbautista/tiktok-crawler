@@ -22,6 +22,7 @@ Uses the class `crawler.search.SearchCrawler` to crawl the results of the search
 <p style='margin-left:1em;'>
 As of writing, the class is unable to bypass Tiktok's captcha for the search results page. As a work around, the <b>user</b> needs to solve the captcha manually for the crawling to proceed. The program will timeout if the captcha is not solved after 60 seconds.
 </p>
+
 ![image](image/captcha.png)
 
 ### 2. `run_get_foryou_videos.py`
