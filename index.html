@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>tiktok-crawler - A custom crawler for downloading Tiktok videos.</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Tiktok Crawler";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> tiktok-crawler - A custom crawler for downloading Tiktok videos.
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href=".">Tiktok Crawler</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#how-to-use">How To Use:</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-run_search_tiktok_videospy">1. run_search_tiktok_videos.py</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-run_get_foryou_videospy">2. run_get_foryou_videos.py</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#output">Output</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="crawler/">Crawler</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="entities/">Entities</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">tiktok-crawler - A custom crawler for downloading Tiktok videos.</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Tiktok Crawler</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/jeppbautista/tiktok-crawler/edit/master/docs/index.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="tiktok-crawler">Tiktok Crawler</h1>
+<p>A custom Python crawler written in Selenium for downloading Tiktok videos as mp4 files along with their metadata in a json file (author, tags, captions, etc.).
+Some key features of this project are:
+1. Download videos from the <strong>for you</strong> page
+2. Download videos based on search parameters</p>
+<div class="warning" style='padding:0.1em; background-color:#E9D8FD; color:#69337A'>
+<span>
+<p style='margin-top:1em; margin-left:1em'>
+<b>NOTE 📝</b></p>
+<p style='margin-left:1em;'>
+This does not implement VPN or proxies for geolocation changes, meaning the Tiktok videos in the <b>for you</b> page will depend on the location of the machine where this library is run. If you are in the Philippines then the videos will be based on the <b>for you</b> page in the Philippines.
+</p>
+</div>
+
+<h2 id="how-to-use">How To Use:</h2>
+<p>View the following files to see how to use the crawlers:</p>
+<h3 id="1-run_search_tiktok_videospy">1. <code>run_search_tiktok_videos.py</code></h3>
+<p>Uses the class <code>crawler.search.SearchCrawler</code> to crawl the results of the search page from the given <code>search</code> parameter.</p>
+<p><b>IMPORTANT ❗</b></p></p>
+<p style='margin-left:1em;'>
+As of writing, the class is unable to bypass Tiktok's captcha for the search results page. As a work around, the <b>user</b> needs to solve the captcha manually for the crawling to proceed. The program will timeout if the captcha is not solved after 60 seconds.
+</p>
+
+<p><img alt="image" src="image/captcha.png" /></p>
+<h3 id="2-run_get_foryou_videospy">2. <code>run_get_foryou_videos.py</code></h3>
+<p>Uses the class <code>crawler.foryoupage.CrawlerForYouPage</code> to crawl Tiktok videos in the <strong>for you</strong> page.</p>
+<h2 id="output">Output</h2>
+<p>The output after running the functions above are json files containing the metadata and mp4 files of the tiktok videos. Each json file and mp4 file is a single tiktok video. They are identified by an internal id, meaning one tiktok video may have an id like <code>f019457f-e39a-4601-9247-95e067864425</code>. The crawler functions will generate a f019457f-e39a-4601-9247-95e067864425.json and f019457f-e39a-4601-9247-95e067864425.mp4 file.</p>
+<p>f019457f-e39a-4601-9247-95e067864425.json:</p>
+<pre><code>{
+    &quot;id&quot;: &quot;f019457f-e39a-4601-9247-95e067864425&quot;,
+    &quot;Author&quot;: {
+        &quot;uniqueid&quot;: &quot;thecongtv&quot;, 
+        &quot;nickname&quot;: &quot;Cong Clothing&quot;, 
+        &quot;link&quot;: &quot;https://www.tiktok.com/@thecongtv&quot;, 
+        &quot;avatar&quot;: &quot;https://p16-sign-sg.tiktokcdn.com/aweme/100x100/tos-alisg-avt-0068/0292a1222969f10c614b327d93596135.jpeg?x-expires=1672488000&amp;x-signature=rj5wD2aivUEyqkBkYFldu1i6lIY%3D&quot;, 
+        &quot;element&quot;: &quot;...&quot;, &quot;Status&quot;: null
+    },
+    &quot;Caption&quot;: {
+        &quot;tags&quot;: [], 
+        &quot;text&quot;: &quot;mali ng naabutan si kuya..&quot;, 
+        &quot;element&quot;: &quot;&lt;span class=\&quot;tiktok-j2a19r-SpanText efbd9f0\&quot;&gt;mali ng naabutan si kuya..&lt;/span&gt;&quot;
+    }, 
+    &quot;Music&quot;: {
+        &quot;title&quot;: &quot;original sound - Cong Clothing&quot;, 
+        &quot;link&quot;: &quot;https://www.tiktok.com/music/original-sound-Cong-Clothing-7182437371232209690&quot;, 
+        &quot;element&quot;: &quot;...&quot;
+    }, 
+    &quot;Media&quot;: {
+        &quot;link&quot;: &quot;https://v16-webapp.tiktok.com/ea97a18c29595d41864754122d9dd471/63adda6c/video/tos/useast2a/tos-useast2a-pve-0037-aiso/owWzfA0MpBDhwWItIQLOhNp9nJ1hxUAaGhuKo0/?a=1988&amp;ch=0&amp;cr=0&amp;dr=0&amp;lr=tiktok&amp;cd=0%7C0%7C1%7C0&amp;cv=1&amp;br=3584&amp;bt=1792&amp;cs=0&amp;ds=3&amp;ft=H3bLjvT4Q9wUxdYCt2HC~MiygGa-W.RUX17S2a6a-x4kS&amp;mime_type=video_mp4&amp;qs=0&amp;rc=OTw7ZjZmaDtlZDM7OzszPEBpampsOTY6ZnhsaDMzZjgzM0AtM2M0NC0zNS0xMjAvLTA2YSNocWozcjRnNWpgLS1kL2Nzcw%3D%3D&amp;l=20221229121934E761197971B88621B22F&amp;btag=80000&quot;, 
+        &quot;element&quot;: &quot;...&quot;
+    },
+    &quot;Metrics&quot;: {
+        &quot;likes&quot;: &quot;76.2K&quot;, 
+        &quot;comments&quot;: &quot;246&quot;, 
+        &quot;shares&quot;: &quot;212&quot;, 
+        &quot;as_of&quot;: &quot;2022-12-29T20:19:30.194738&quot;, 
+        &quot;element&quot;: &quot;...&quot;
+    }
+}
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="crawler/" class="btn btn-neutral float-right" title="Crawler">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/jeppbautista/tiktok-crawler" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+      <span><a href="crawler/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme_extra.js" defer></script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.4.2
+Build Date UTC : 2023-01-09 10:08:14.124136+00:00
+-->

@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Entities - tiktok-crawler - A custom crawler for downloading Tiktok videos.</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Entities";
+        var mkdocs_page_input_path = "entities.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> tiktok-crawler - A custom crawler for downloading Tiktok videos.
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Tiktok Crawler</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../crawler/">Crawler</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Entities</a>
+    <ul class="current">
+    </ul>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">tiktok-crawler - A custom crawler for downloading Tiktok videos.</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Entities</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/jeppbautista/tiktok-crawler/edit/master/docs/entities.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h2 id="entities">Entities</h2>
+<p>Model class representation of all the parts of a Tiktok video. Parts such as: the user who posted the video, captions, media, metrics, music.</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+<a id="tiktok_crawler.entities"></a>
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="tiktok_crawler.entities.Author" class="doc doc-heading">
+        <code>Author</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="tiktok_crawler.entities.TiktokEntity">TiktokEntity</span></code></p>
+
+  
+      <p>Model class representation of the user who posted the Tiktok video aka author.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>uniqueid</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>Username of the author.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>avatar</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>Link to the avatar image of the author.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>link</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>Link to the profile of the author.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>nickname</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>Nickname of the author.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>element</code></td>
+          <td>
+                <code><span title="selenium.webdriver.remote.webelement.WebElement">WebElement</span></code>
+          </td>
+          <td><p>The Selenium web element which contains the details of the author.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        <details class="quote">
+          <summary>Source code in <code>tiktok_crawler\entities.py</code></summary>
+          <pre class="highlight"><code class="language-python">@dataclass
+class Author(TiktokEntity):
+    """Model class representation of the user who posted the Tiktok video aka author.
+
+    Args:
+        uniqueid (str): Username of the author.
+        avatar (str): Link to the avatar image of the author.
+        link (str): Link to the profile of the author.
+        nickname (str): Nickname of the author.
+        element (WebElement): The Selenium web element which contains the details of the author. 
+    """
+    uniqueid: str
+    avatar: str
+    link: str
+    nickname: str
+    element: WebElement
+
+    def __post_init__(self):
+        self.uniqueid = self.uniqueid.strip()
+        self.avatar = self.avatar.strip()
+        self.link = self.link.strip()
+        self.nickname = self.nickname.strip()
+
+    def __eq__(self, obj) -&gt; bool:
+        return (self.uniqueid == obj.uniqueid) \
+            and (self.link == obj.link)
+
+    def __repr__(self):
+        return f"Author(uniqueid={self.uniqueid}, nickname={self.nickname})"
+
+    def to_dict(self):
+        return dict(
+            uniqueid=self.uniqueid,
+            nickname=self.nickname,
+            link=self.link,
+            avatar=self.avatar,
+        )</code></pre>
+        </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="tiktok_crawler.entities.Caption" class="doc doc-heading">
+        <code>Caption</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="tiktok_crawler.entities.TiktokEntity">TiktokEntity</span></code></p>
+
+  
+      <p>Model class representation of the caption in a Tiktok video.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>text</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The caption in text format.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>tags</code></td>
+          <td>
+                <code>list[<a class="autorefs autorefs-internal" title="tiktok_crawler.entities.Tag" href="#tiktok_crawler.entities.Tag">Tag</a>]</code>
+          </td>
+          <td><p>List of tags inside the caption.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>element</code></td>
+          <td>
+                <code><span title="selenium.webdriver.remote.webelement.WebElement">WebElement</span></code>
+          </td>
+          <td><p>The Selenium web element which contains the details of the caption.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        <details class="quote">
+          <summary>Source code in <code>tiktok_crawler\entities.py</code></summary>
+          <pre class="highlight"><code class="language-python">@dataclass
+class Caption(TiktokEntity):
+    """Model class representation of the caption in a Tiktok video.
+
+    Args:
+        text (str): The caption in text format.
+        tags (list[Tag]): List of tags inside the caption.
+        element (WebElement): The Selenium web element which contains the details of the caption. 
+    """
+    text: str
+    tags: list[Tag]
+    element: WebElement
+
+    def __post_init__(self):
+        self.text = self.text.strip()
+
+    def __repr__(self):
+        return f"Caption(text={self.text}, tags={self.tags})"
+
+    def to_dict(self):
+        return dict(
+            tags=[tag.to_dict() for tag in self.tags],
+            text=self.text,
+
+        )</code></pre>
+        </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="tiktok_crawler.entities.Media" class="doc doc-heading">
+        <code>Media</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="tiktok_crawler.entities.TiktokEntity">TiktokEntity</span></code></p>
+
+  
+      <p>Model class representation of the Tiktok video.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>link</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The link of the video.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>element</code></td>
+          <td>
+                <code><span title="selenium.webdriver.remote.webelement.WebElement">WebElement</span></code>
+          </td>
+          <td><p>The Selenium web element which contains the details of the video.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        <details class="quote">
+          <summary>Source code in <code>tiktok_crawler\entities.py</code></summary>
+          <pre class="highlight"><code class="language-python">@dataclass
+class Media(TiktokEntity):
+    """Model class representation of the Tiktok video.
+
+    Args:
+        link (str): The link of the video.
+        element (WebElement): The Selenium web element which contains the details of the video. 
+    """
+    link: str
+    element: WebElement
+
+    def __post_init__(self):
+        self.link = self.link.strip()
+
+    def __repr__(self):
+        return f"Media(link={self.link})"
+
+    def to_dict(self):
+        return dict(
+            link=self.link,
+
+        )</code></pre>
+        </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="tiktok_crawler.entities.Metrics" class="doc doc-heading">
+        <code>Metrics</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="tiktok_crawler.entities.TiktokEntity">TiktokEntity</span></code></p>
+
+  
+      <p>Model class representation of the metrics generated by the Tiktok video at a specific point of time.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>likes</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The raw number of likes extracted.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>comments</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The raw number of comments extracted.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>shares</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The raw number of shares extracted.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>element</code></td>
+          <td>
+                <code><span title="selenium.webdriver.remote.webelement.WebElement">WebElement</span></code>
+          </td>
+          <td><p>The Selenium web element which contains the metrics.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>as_of</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The date time when the metrics are extracted in iso 8601 format. Defaults to the current date time.</p></td>
+          <td>
+                <code>datetime.datetime.now().isoformat()</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        <details class="quote">
+          <summary>Source code in <code>tiktok_crawler\entities.py</code></summary>
+          <pre class="highlight"><code class="language-python">@dataclass
+class Metrics(TiktokEntity):
+    """Model class representation of the metrics generated by the Tiktok video at a specific point of time.
+
+    Args:
+        likes (str): The raw number of likes extracted.
+        comments (str): The raw number of comments extracted.
+        shares (str): The raw number of shares extracted.
+        element (WebElement): The Selenium web element which contains the metrics.
+        as_of (str): The date time when the metrics are extracted in iso 8601 format. Defaults to the current date time.
+    """
+    likes: str
+    comments: str
+    shares: str
+    element: WebElement
+    as_of: str = datetime.datetime.now().isoformat()
+
+    def __post_init__(self):
+        self.likes = self.likes.strip()
+        self.comments = self.comments.strip()
+        self.shares = self.shares.strip()
+
+    def __repr__(self):
+        return f"Metrics(likes={self.likes}, comments={self.comments},shares={self.shares}, as_of={self.as_of} )"
+
+    def to_dict(self):
+        return dict(
+            likes=self.likes,
+            comments=self.comments,
+            shares=self.shares,
+            as_of=self.as_of,
+
+        )</code></pre>
+        </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="tiktok_crawler.entities.Music" class="doc doc-heading">
+        <code>Music</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="tiktok_crawler.entities.TiktokEntity">TiktokEntity</span></code></p>
+
+  
+      <p>Model class representation of the music used in a Tiktok video.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>title</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The title of the music.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>link</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The link of the music .</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>element</code></td>
+          <td>
+                <code><span title="selenium.webdriver.remote.webelement.WebElement">WebElement</span></code>
+          </td>
+          <td><p>The Selenium web element which contains the details of the music.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        <details class="quote">
+          <summary>Source code in <code>tiktok_crawler\entities.py</code></summary>
+          <pre class="highlight"><code class="language-python">@dataclass
+class Music(TiktokEntity):
+    """Model class representation of the music used in a Tiktok video.
+
+    Args:
+        title (str): The title of the music.
+        link (str): The link of the music .
+        element (WebElement): The Selenium web element which contains the details of the music. 
+    """
+    title: str
+    link: str
+    element: WebElement
+
+    def __post_init__(self):
+        self.title = self.title.strip()
+        self.link = self.link.strip()
+
+    def __eq__(self, obj) -&gt; bool:
+        return (self.title == obj.title) \
+            and (self.link == obj.link)
+
+    def __repr__(self):
+        return f"Music(title={self.title}, link={self.link})"
+
+    def to_dict(self):
+        return dict(
+            title=self.title,
+            link=self.link,
+
+        )</code></pre>
+        </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="tiktok_crawler.entities.Tag" class="doc doc-heading">
+        <code>Tag</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="tiktok_crawler.entities.TiktokEntity">TiktokEntity</span></code></p>
+
+  
+      <p>Model class representation of a tag in Tiktok. A tag or hashtag is a text preceded by a hash sign (#) which is used to categorize posts.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>link</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The link of the tag.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>text</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The text of the tag.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>element</code></td>
+          <td>
+                <code><span title="selenium.webdriver.remote.webelement.WebElement">WebElement</span></code>
+          </td>
+          <td><p>The Selenium web element which contains the details of the tag.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        <details class="quote">
+          <summary>Source code in <code>tiktok_crawler\entities.py</code></summary>
+          <pre class="highlight"><code class="language-python">@dataclass
+class Tag(TiktokEntity):
+    """Model class representation of a tag in Tiktok. A tag or hashtag is a text preceded by a hash sign (#) which is used to categorize posts.
+
+    Args:
+        link (str): The link of the tag.
+        text (str): The text of the tag.
+        element (WebElement): The Selenium web element which contains the details of the tag. 
+    """
+
+    link: str
+    text: str
+    element: WebElement
+
+    def __post_init__(self):
+        self.link = self.link.strip()
+        self.text = self.text.strip()
+
+    def __eq__(self, obj) -&gt; bool:
+        return (self.text == obj.text) \
+            and (self.link == obj.link)
+
+    def __repr__(self):
+        return f"Tag(link={self.link}, text={self.text})"
+
+    def to_dict(self):
+        return dict(
+            link=self.link,
+            text=self.text
+        )</code></pre>
+        </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="tiktok_crawler.entities.Tiktok" class="doc doc-heading">
+        <code>Tiktok</code>
+
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
+  </span>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Model class representation of the Tiktok video to be extracted. This class utilizes all the other <code>entities</code> dataclasses.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>id</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>Unique internal id of the Tiktok video.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>author</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="tiktok_crawler.entities.Author" href="#tiktok_crawler.entities.Author">Author</a></code>
+          </td>
+          <td><p><code>entities.Author</code> instance of the Tiktok video.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>caption</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="tiktok_crawler.entities.Caption" href="#tiktok_crawler.entities.Caption">Caption</a></code>
+          </td>
+          <td><p><code>entities.Caption</code> instance of the Tiktok video.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>music</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="tiktok_crawler.entities.Music" href="#tiktok_crawler.entities.Music">Music</a></code>
+          </td>
+          <td><p><code>entities.Music</code> instance of the Tiktok video.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>media</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="tiktok_crawler.entities.Media" href="#tiktok_crawler.entities.Media">Media</a></code>
+          </td>
+          <td><p><code>entities.Media</code> instance of the Tiktok video.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>metrics</code></td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="tiktok_crawler.entities.Metrics" href="#tiktok_crawler.entities.Metrics">Metrics</a></code>
+          </td>
+          <td><p><code>entities.Metrics</code> instance of the Tiktok video.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>element</code></td>
+          <td>
+                <code><span title="selenium.webdriver.remote.webelement.WebElement">WebElement</span></code>
+          </td>
+          <td><p>The Selenium web element which contains the Tiktok video.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>status</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>A tag to signify if the scrape was sucessful.</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        <details class="quote">
+          <summary>Source code in <code>tiktok_crawler\entities.py</code></summary>
+          <pre class="highlight"><code class="language-python">@dataclass
+class Tiktok:
+    """Model class representation of the Tiktok video to be extracted. This class utilizes all the other `entities` dataclasses.
+
+    Args:
+        id (str): Unique internal id of the Tiktok video.
+        author (Author): `entities.Author` instance of the Tiktok video.
+        caption (Caption): `entities.Caption` instance of the Tiktok video.
+        music (Music): `entities.Music` instance of the Tiktok video.
+        media (Media): `entities.Media` instance of the Tiktok video.
+        metrics (Metrics): `entities.Metrics` instance of the Tiktok video.
+        element (WebElement): The Selenium web element which contains the Tiktok video.
+        status (str): A tag to signify if the scrape was sucessful. 
+    """
+
+    id: str
+    author: Author
+    caption: Caption
+    music: Music
+    media: Media
+    metrics: Metrics
+    element: WebElement
+    status: str = None
+
+    def save(self, path:str = "./"):
+        def _save_metadata(path):
+            file_path = os.path.join(path, f"{self.id}.json")
+            with open(file_path, 'w+') as file:
+                json.dump(self.to_dict(), file)
+
+        def _save_video(path):
+            file_path = os.path.join(path, f"{self.id}.mp4")
+            response = requests.get(self.media.link)
+            with open(file_path, "wb") as file:
+                file.write(response.content)
+
+        if self.media.link:
+            logging.info("Saving Tiktok...")
+            _save_metadata(path)
+            _save_video(path)
+        else:
+            logging.error("Media is NULL")
+
+    def to_dict(self):
+        return dict(
+            id=self.id,
+            Author=self.author.to_dict(),
+            Caption=self.caption.to_dict(),
+            Music=self.music.to_dict(),
+            Media=self.media.to_dict(),
+            Metrics=self.metrics.to_dict(),
+            Status=self.status
+        )
+
+    def __eq__(self, obj) -&gt; bool:
+        return self.id == obj.id
+
+    def __repr__(self) -&gt; str:
+        return f"Tiktok(id={self.id}, {self.status}, {self.author}, {self.caption}, {self.music}, {self.media}, {self.metrics})"</code></pre>
+        </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../crawler/" class="btn btn-neutral float-left" title="Crawler"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/jeppbautista/tiktok-crawler" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../crawler/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

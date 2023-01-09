@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Crawler - tiktok-crawler - A custom crawler for downloading Tiktok videos.</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Crawler";
+        var mkdocs_page_input_path = "crawler.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> tiktok-crawler - A custom crawler for downloading Tiktok videos.
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Tiktok Crawler</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Crawler</a>
+    <ul class="current">
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../entities/">Entities</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">tiktok-crawler - A custom crawler for downloading Tiktok videos.</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+      <li>Crawler</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/jeppbautista/tiktok-crawler/edit/master/docs/crawler.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h2 id="crawler">Crawler</h2>
+
+
+<div class="doc doc-object doc-module">
+
+
+<a id="tiktok_crawler.crawler.search"></a>
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="tiktok_crawler.crawler.search.SearchCrawler" class="doc doc-heading">
+        <code>SearchCrawler</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="tiktok_crawler.crawler.Crawler">Crawler</span></code></p>
+
+  
+      <p>Handles the web crawling of videos from the <strong>Search results</strong> page.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>search</code></td>
+          <td>
+                <code>str</code>
+          </td>
+          <td><p>The raw search term.</p></td>
+          <td>
+              <em>required</em>
+          </td>
+        </tr>
+        <tr>
+          <td><code>limit</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>Defines how many videos to download.</p></td>
+          <td>
+                <code>15</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>driver_options</code></td>
+          <td>
+                <code>list</code>
+          </td>
+          <td><p>Implements the chromium command line switches. See here: https://peter.sh/experiments/chromium-command-line-switches/</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        <details class="quote">
+          <summary>Source code in <code>tiktok_crawler\crawler\search.py</code></summary>
+          <pre class="highlight"><code class="language-python">class SearchCrawler(Crawler):
+    """Handles the web crawling of videos from the **Search results** page.
+
+    Args:
+        search (str): The raw search term.
+        limit (int): Defines how many videos to download.
+        driver_options (list): Implements the chromium command line switches. See here: https://peter.sh/experiments/chromium-command-line-switches/
+    """
+
+    def __init__(
+        self, 
+        search,
+        limit:int = 15,
+        driver_options:list = None
+    ) -&gt; None:
+        options = driver_options if isinstance(driver_options, list) else []
+        self.driver = Driver(*options).get_driver()
+        self.limit = limit
+        self.search = quote_plus(search)
+        search_url = f"{Config.CRAWL_SEARCH_URL}q={self.search}"
+        self.root = self._get_root(search_url)     
+
+    def get_tiktok_videos(self) -&gt; list[Tiktok]:
+        """Downloads videos and metadata from the **search results** page of Tiktok.
+
+        Returns:
+            list[Tiktok]: list of `tiktok_crawler.entities.Tiktok`
+        """
+        self._wait_for_captcha()
+        self._load_tiktok_videos()
+        tiktok_links = self._get_tiktok_links()
+        tiktoks = []
+        for tiktok_link in tiktok_links:
+            try:
+                self.driver.get(tiktok_link)
+                tiktok_container = self.driver.find_element(By.XPATH, search.TiktokVideo.CONTAINER)
+                tiktoks.append(self._get_tiktok(tiktok_container))
+            except StaleElementReferenceException:
+                logging.error("Stale Element")
+
+        return tiktoks
+
+    def _get_tiktok_links(self) -&gt; list[WebElement]:
+        return [element.get_attribute("href") for element in self.root.find_elements(By.XPATH, search.ContainerItem.TIKTOK_VIDEOS)][:self.limit]
+
+    def _get_root(self, url: str) -&gt; WebElement:
+        logging.info(f"Loading: {url}")
+        self.driver.get(url)
+        root = self.driver.find_element(By.XPATH, search.Root.ROOT)
+
+        return root
+
+    def _load_tiktok_videos(self) -&gt; None:   
+        """Loads TikTok videos by scrolling and clicking the 'Load More' button.
+
+        The function will keep scrolling and loading more TikTok videos until it has reached the limit specified in the `self.limit` attribute. 
+        If no elements are found using the XPATH specified in `search.ContainerItem.TIKTOK_VIDEOS`, a `NoElementsFound` exception is raised.
+        """
+        tiktok_links = []
+        while len(tiktok_links) &lt; self.limit:
+            logging.info("Scrolling...")
+            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+            tiktok_links = tiktok_links + self.root.find_elements(By.XPATH, search.ContainerItem.TIKTOK_VIDEOS)
+            if len(tiktok_links) == 0:
+                raise NoElementsFound(f"No elements found from given XPATH: {search.ContainerItem.TIKTOK_VIDEOS}")
+
+            logging.info(f"Element count: {len(tiktok_links)}")
+            load_more_button = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, search.ContainerItem.LOAD_MORE_BUTTON))
+            )
+            load_more_button.click()
+            time.sleep(Config.CRAWL_SCROLL_PAUSE_TIME)
+
+    def _wait_for_captcha(self):
+        """Waits for the user to solve a captcha, if present.
+        """
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.XPATH, search.ContainerItem.CAPTCHA))
+            )
+
+            logging.warning("Process will timeout in 60 seconds if captcha is not solved.")
+            logging.warning("Waiting for user to solve captcha...")
+
+            WebDriverWait(self.driver, 60).until_not(
+                EC.presence_of_element_located((By.XPATH, search.ContainerItem.CAPTCHA))
+            )
+
+            logging.info("Captcha Solved. Proceeding to crawl...")
+            time.sleep(5)
+        except TimeoutException:
+            raise CaptchaTimeoutException("Captcha needs to be solved within 60 seconds")
+
+    ### Get entities
+
+    def _get_author(self, item_container: WebElement) -&gt; Author:
+        """Extracts the information about the account who posted the Tiktok video.
+
+        Args:
+            item_container (WebElement): Accepts a Selenium web element which is the extracted container of a Tiktok video.
+
+        Returns:
+            Author: Returns a `tiktok_crawler.entities.Author` instance.
+        """
+        uniqueid = item_container.find_element(By.XPATH, search.Author.UNIQUEID).text
+        avatar = ""
+        link = item_container.find_element(By.XPATH, search.Author.LINK).get_attribute("href")
+        nickname = item_container.find_element(By.XPATH, search.Author.NICKNAME).text
+
+        author = Author(
+            uniqueid=uniqueid,
+            avatar=avatar,
+            link=link,
+            nickname=nickname,
+            element=item_container
+        )
+
+        return author
+
+    def _get_caption(self, item_container: WebElement) -&gt; Caption:
+        """Extracts the caption attached with the Tiktok video.
+
+        Args:
+            item_container (WebElement): Accepts a Selenium web element which is the extracted container of a Tiktok video. 
+
+        Returns:
+            Caption: Returns a `tiktok_crawler.entities.Caption` instance.
+        """
+        video_description = item_container.find_element(By.XPATH, search.Caption.CONTAINER)
+        video_text = video_description.find_element(By.XPATH, search.Caption.TEXT).text
+
+        tags = self._get_tags(video_description)
+
+        caption = Caption(
+            text=video_text,
+            tags=tags,
+            element=video_description
+        )
+
+        return caption
+
+    def _get_media(self, item_container: WebElement) -&gt; Media:
+        """Extracts the Tiktok video.
+
+        Args:
+            item_container (WebElement): Accepts a Selenium web element which is the extracted container of a Tiktok video. 
+
+        Returns:
+            Media: Returns a `tiktok_crawler.entities.Media` instance.
+
+        Raises:
+            MediaNotFoundException: if the crawler was unable to download the Tiktok video.
+        """
+        media_container = item_container.find_element(By.XPATH, search.Media.CONTAINER)
+        try:
+            link = WebDriverWait(media_container, 10).until(
+                EC.presence_of_element_located((By.XPATH, f"{search.Media.LINK}|{search.Media.LINK_ALT}"))
+            ).get_attribute("src")
+        except TimeoutException:
+            try:
+                link = WebDriverWait(media_container, 10).until(
+                    EC.presence_of_element_located((By.XPATH, f"{search.Media.LINK}|{search.Media.LINK_ALT}"))
+                ).get_attribute("src")
+            except TimeoutException:  
+                raise MediaNotFoundException("Unable to find Media")
+
+        media = Media(
+            link=link,
+            element=media_container
+        )
+
+        return media
+
+    def _get_metrics(self, item_container: WebElement) -&gt; Metrics:
+        """Extracts the metrics of the Tiktok video.
+
+        Args:
+            item_container (WebElement): Accepts a Selenium web element which is the extracted container of a Tiktok video. 
+
+        Returns:
+            Metrics: Returns a `tiktok_crawler.entities.Metrics` instance.
+        """
+        metrics_container = item_container.find_element(By.XPATH, search.Metrics.CONTAINER)
+
+        likes = metrics_container.find_element(By.XPATH, search.Metrics.LIKES).text
+        comments = metrics_container.find_element(By.XPATH, search.Metrics.COMMENTS).text
+        shares = metrics_container.find_element(By.XPATH, search.Metrics.SHARES).text
+
+        metrics = Metrics(
+            likes=likes,
+            comments=comments,
+            shares=shares,
+            element=metrics_container
+        )
+
+        return metrics
+
+    def _get_music(self, item_container: WebElement) -&gt; Music:
+        """Extracts the music of the Tiktok video.
+
+        Args:
+            item_container (WebElement): Accepts a Selenium web element which is the extracted container of a Tiktok video. 
+
+        Returns:
+            Music: Returns a `tiktok_crawler.entities.Music` instance.
+        """
+        music_container = item_container.find_element(By.XPATH, search.Music.CONTAINER)
+
+        title = music_container.find_element(By.XPATH, search.Music.TITLE).text
+        link = music_container.find_element(By.XPATH, search.Music.LINK).get_attribute("href")
+
+        music = Music(
+            title=title,
+            link=link,
+            element=music_container
+        )
+
+        return music
+
+    def _get_tags(self, video_description: WebElement) -&gt; list[Tag]:
+        """Extracts the tags in the caption of the Tiktok video.
+
+        Args:
+            video_description (WebElement): Accepts a Selenium web element which is the extracted video container (see `_get_caption()`) of a Tiktok video. 
+
+        Returns:
+            list[Tag]: List of `tiktok_crawler.entities.Tag`
+        """
+
+        _tags = []
+        for tag in video_description.find_elements(By.XPATH, search.Caption.TAGS):
+            link = tag.get_attribute("href")
+            text = tag.find_element(By.XPATH, search.Tag.TEXT).text
+
+            _tags.append(
+                Tag(
+                    link=link,
+                    text=text,
+                    element=tag
+                )
+            )
+
+        return _tags</code></pre>
+        </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="tiktok_crawler.crawler.search.SearchCrawler.get_tiktok_videos" class="doc doc-heading">
+<code class="highlight language-python">get_tiktok_videos()</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Downloads videos and metadata from the <strong>search results</strong> page of Tiktok.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list[<a class="autorefs autorefs-internal" title="tiktok_crawler.entities.Tiktok" href="../entities/#tiktok_crawler.entities.Tiktok">Tiktok</a>]</code>
+          </td>
+          <td><p>list[Tiktok]: list of <code>tiktok_crawler.entities.Tiktok</code></p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>tiktok_crawler\crawler\search.py</code></summary>
+        <pre class="highlight"><code class="language-python">def get_tiktok_videos(self) -&gt; list[Tiktok]:
+    """Downloads videos and metadata from the **search results** page of Tiktok.
+
+    Returns:
+        list[Tiktok]: list of `tiktok_crawler.entities.Tiktok`
+    """
+    self._wait_for_captcha()
+    self._load_tiktok_videos()
+    tiktok_links = self._get_tiktok_links()
+    tiktoks = []
+    for tiktok_link in tiktok_links:
+        try:
+            self.driver.get(tiktok_link)
+            tiktok_container = self.driver.find_element(By.XPATH, search.TiktokVideo.CONTAINER)
+            tiktoks.append(self._get_tiktok(tiktok_container))
+        except StaleElementReferenceException:
+            logging.error("Stale Element")
+
+    return tiktoks</code></pre>
+      </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div><hr />
+
+
+<div class="doc doc-object doc-module">
+
+
+<a id="tiktok_crawler.crawler.foryoupage"></a>
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="tiktok_crawler.crawler.foryoupage.CrawlerForYouPage" class="doc doc-heading">
+        <code>CrawlerForYouPage</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+      <p class="doc doc-class-bases">
+        Bases: <code><span title="tiktok_crawler.crawler.Crawler">Crawler</span></code></p>
+
+  
+      <p>Handles the web crawling of videos from the <strong>For You</strong> page.</p>
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>limit</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td><p>Defines how many videos to download.</p></td>
+          <td>
+                <code>15</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>driver_options</code></td>
+          <td>
+                <code>list</code>
+          </td>
+          <td><p>Implements the chromium command line switches. See here: https://peter.sh/experiments/chromium-command-line-switches/</p></td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+        <details class="quote">
+          <summary>Source code in <code>tiktok_crawler\crawler\foryoupage.py</code></summary>
+          <pre class="highlight"><code class="language-python">class CrawlerForYouPage(Crawler):
+    """Handles the web crawling of videos from the **For You** page.
+
+    Args:
+        limit (int): Defines how many videos to download.
+        driver_options (list): Implements the chromium command line switches. See here: https://peter.sh/experiments/chromium-command-line-switches/
+    """
+    def __init__(
+        self, 
+        limit:int = 15,
+        driver_options:list = None
+    ) -&gt; None:
+        options = driver_options if isinstance(driver_options, list) else []
+        self.driver = Driver(*options).get_driver()
+        self.limit = limit
+        self.root = self._get_root(Config.CRAWL_ROOT_URL)
+
+    def get_tiktok_videos(self) -&gt; list[Tiktok]:
+        """Downloads videos and metadata from the **for you** page of Tiktok.
+
+        Returns:
+            list[Tiktok]: list of `tiktok_crawler.entities.Tiktok`
+        """
+        self._load_tiktok_videos()
+        tiktoks = []
+
+        for element in self.root.find_elements(By.XPATH, foryoupage.ContainerItem.CONTAINERS)[:self.limit]:
+            logging.info("Scrolling to Element...")
+            self.driver.execute_script("arguments[0].scrollIntoView()", element)
+            time.sleep(Config.CRAWL_SCROLL_PAUSE_TIME)
+            tiktok = self._get_tiktok(element)
+            tiktoks.append(tiktok)
+
+        return tiktoks
+
+    def _get_root(self, url:str) -&gt; WebElement:
+        """Extracts the root element of the page. This is done to remove unnecessary HTML elements such as the *head*, *script* and *style*.
+
+        Args:
+            url (str): The url of the page to be extracted.
+
+        Returns:
+            WebElement:  Returns a Selenium web element which is the extracted root element of the page.
+        """
+        self.driver.get(url)
+        root = self.driver.find_element(By.XPATH, foryoupage.Root.ROOT)
+
+        return root
+
+    def _load_tiktok_videos(self) -&gt; None:
+        """Pre-loads tiktok videos by scrolling down until `self.limit` is exceeded or reached.
+        """
+        def _is_limit_reached() -&gt; bool:
+            """Checks if the number of elements in `xpath.ContainerItem.CONTAINERS` has reached or exceeded `self.limit`
+
+            Returns:
+                bool: `self.limit` &lt;= the number of elements in `xpath.ContainerItem.CONTAINERS`
+            """
+            element_count = len([element for element in self.root.find_elements(By.XPATH, foryoupage.ContainerItem.CONTAINERS)])
+            logging.info(f"Element count: {element_count}")
+            return self.limit &lt;= element_count
+
+        while not _is_limit_reached():
+            logging.info("Scrolling...")
+            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(Config.CRAWL_SCROLL_PAUSE_TIME)
+
+    ### Get entities
+
+    def _get_author(self, item_container: WebElement) -&gt; Author:
+        """Extracts the information about the account who posted the Tiktok video.
+
+        Args:
+            item_container (WebElement): Accepts a Selenium web element which is the extracted container of a Tiktok video.
+
+        Returns:
+            Author: Returns a `tiktok_crawler.entities.Author` instance.
+        """
+        uniqueid = item_container.find_element(By.XPATH, foryoupage.Author.UNIQUEID).text
+        avatar = item_container.find_element(By.XPATH, foryoupage.Author.AVATAR).get_attribute("src")
+        link = item_container.find_element(By.XPATH, foryoupage.Author.LINK).get_attribute("href")
+        nickname = item_container.find_element(By.XPATH, foryoupage.Author.NICKNAME).text
+
+        author = Author(
+            uniqueid=uniqueid,
+            avatar=avatar,
+            link=link,
+            nickname=nickname,
+            element=item_container
+        )
+
+        return author
+
+    def _get_caption(self, item_container: WebElement) -&gt; Caption:
+        """Extracts the caption attached with the Tiktok video.
+
+        Args:
+            item_container (WebElement): Accepts a Selenium web element which is the extracted container of a Tiktok video. 
+
+        Returns:
+            Caption: Returns a `tiktok_crawler.entities.Caption` instance.
+        """
+        video_description = item_container.find_element(By.XPATH, foryoupage.Caption.CONTAINER)
+        video_text = video_description.find_element(By.XPATH, foryoupage.Caption.TEXT).text
+
+        tags = self._get_tags(video_description)
+
+        caption = Caption(
+            text=video_text,
+            tags=tags,
+            element=video_description
+        )
+
+        return caption
+
+    def _get_media(self, item_container: WebElement) -&gt; Media:
+        """Extracts the Tiktok video.
+
+        Args:
+            item_container (WebElement): Accepts a Selenium web element which is the extracted container of a Tiktok video. 
+
+        Returns:
+            Media: Returns a `tiktok_crawler.entities.Media` instance.
+
+        Raises:
+            MediaNotFoundException: if the crawler was unable to download the Tiktok video.
+        """
+        media_container = item_container.find_element(By.XPATH, foryoupage.Media.CONTAINER)
+        try:
+            link = WebDriverWait(media_container, 10).until(
+                EC.presence_of_element_located((By.XPATH, f"{foryoupage.Media.LINK}|{foryoupage.Media.LINK_ALT}"))
+            ).get_attribute("src")
+        except TimeoutException:
+            try:
+                link = WebDriverWait(media_container, 10).until(
+                    EC.presence_of_element_located((By.XPATH, f"{foryoupage.Media.LINK}|{foryoupage.Media.LINK_ALT}"))
+                ).get_attribute("src")
+            except TimeoutException:  
+                raise exception.MediaNotFoundException("Unable to find Media")
+
+        media = Media(
+            link=link,
+            element=media_container
+        )
+
+        return media
+
+    def _get_metrics(self, item_container: WebElement) -&gt; Metrics:
+        """Extracts the metrics of the Tiktok video.
+
+        Args:
+            item_container (WebElement): Accepts a Selenium web element which is the extracted container of a Tiktok video. 
+
+        Returns:
+            Metrics: Returns a `tiktok_crawler.entities.Metrics` instance.
+        """
+        metrics_container = item_container.find_element(By.XPATH, foryoupage.Metrics.CONTAINER)
+
+        likes = metrics_container.find_element(By.XPATH, foryoupage.Metrics.LIKES).text
+        comments = metrics_container.find_element(By.XPATH, foryoupage.Metrics.COMMENTS).text
+        shares = metrics_container.find_element(By.XPATH, foryoupage.Metrics.SHARES).text
+
+        metrics = Metrics(
+            likes=likes,
+            comments=comments,
+            shares=shares,
+            element=metrics_container
+        )
+
+        return metrics
+
+    def _get_music(self, item_container: WebElement) -&gt; Music:
+        """Extracts the music of the Tiktok video.
+
+        Args:
+            item_container (WebElement): Accepts a Selenium web element which is the extracted container of a Tiktok video. 
+
+        Returns:
+            Music: Returns a `tiktok_crawler.entities.Music` instance.
+        """
+        music_container = item_container.find_element(By.XPATH, foryoupage.Music.CONTAINER)
+
+        title = music_container.find_element(By.XPATH, foryoupage.Music.TITLE).text
+        link = music_container.find_element(By.XPATH, foryoupage.Music.LINK).get_attribute("href")
+
+        music = Music(
+            title=title,
+            link=link,
+            element=music_container
+        )
+
+        return music
+
+    def _get_tags(self, video_description: WebElement) -&gt; list[Tag]:
+        """Extracts the tags in the caption of the Tiktok video.
+
+        Args:
+            video_description (WebElement): Accepts a Selenium web element which is the extracted video container (see `_get_caption()`) of a Tiktok video. 
+
+        Returns:
+            list[Tag]: List of `tiktok_crawler.entities.Tag`
+        """
+
+        _tags = []
+        for tag in video_description.find_elements(By.XPATH, foryoupage.Caption.TAGS):
+            link = tag.get_attribute("href")
+            text = tag.find_element(By.XPATH, foryoupage.Tag.TEXT).text
+
+            _tags.append(
+                Tag(
+                    link=link,
+                    text=text,
+                    element=tag
+                )
+            )
+
+        return _tags</code></pre>
+        </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="tiktok_crawler.crawler.foryoupage.CrawlerForYouPage.get_tiktok_videos" class="doc doc-heading">
+<code class="highlight language-python">get_tiktok_videos()</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Downloads videos and metadata from the <strong>for you</strong> page of Tiktok.</p>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list[<a class="autorefs autorefs-internal" title="tiktok_crawler.entities.Tiktok" href="../entities/#tiktok_crawler.entities.Tiktok">Tiktok</a>]</code>
+          </td>
+          <td><p>list[Tiktok]: list of <code>tiktok_crawler.entities.Tiktok</code></p></td>
+        </tr>
+    </tbody>
+  </table>
+
+      <details class="quote">
+        <summary>Source code in <code>tiktok_crawler\crawler\foryoupage.py</code></summary>
+        <pre class="highlight"><code class="language-python">def get_tiktok_videos(self) -&gt; list[Tiktok]:
+    """Downloads videos and metadata from the **for you** page of Tiktok.
+
+    Returns:
+        list[Tiktok]: list of `tiktok_crawler.entities.Tiktok`
+    """
+    self._load_tiktok_videos()
+    tiktoks = []
+
+    for element in self.root.find_elements(By.XPATH, foryoupage.ContainerItem.CONTAINERS)[:self.limit]:
+        logging.info("Scrolling to Element...")
+        self.driver.execute_script("arguments[0].scrollIntoView()", element)
+        time.sleep(Config.CRAWL_SCROLL_PAUSE_TIME)
+        tiktok = self._get_tiktok(element)
+        tiktoks.append(tiktok)
+
+    return tiktoks</code></pre>
+      </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Tiktok Crawler"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../entities/" class="btn btn-neutral float-right" title="Entities">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/jeppbautista/tiktok-crawler" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../entities/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
