@@ -1,17 +1,18 @@
 name: tiktok_crawler
 
 on:
-	push:
-		- master
-permissions:
-	contents: write
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
 jobs:
-	deploy:
-		runs-on: ubuntu-latest
-		steps:
-			- uses: actions/checkout@v3
-			- uses: actions/setup-python@v4
-			  with: 
-			  	python-version: 3.9
-			- run: pip install mkdocs
-			- run: mkdocs gh-deploy --force
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+		- uses: actions/setup-python@v4
+      with:
+        python-version: 3.x
+    - run: pip install mkdocs 
+    - run: mkdocs gh-deploy --force
